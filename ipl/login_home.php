@@ -1,3 +1,9 @@
+<?php 
+  session_start();
+  if($_SESSION['loggedin']==FALSE) {
+    header('Location: home.php');
+  }
+?>
 <!DOCTYPE HTML>
 <html>
 
@@ -34,9 +40,9 @@
         <!-- insert the page content here -->
         <?php
         // Connecting, selecting database
-        $uname = $_GET["usname"];
+        $uname = $_SESSION['name'];
         echo "<h1> Welcome $uname </h1>";
-
+        
         ?>
 
       </div>

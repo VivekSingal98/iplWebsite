@@ -1,4 +1,4 @@
-<?php include 'func.php'; ?>
+<?php include 'func2.php'; ?>
 <!DOCTYPE HTML>
 <html>
 
@@ -25,9 +25,10 @@
           <li><a href="teams.php">Teams</a></li>
           <li><a href="players.php">Players</a></li>
           <li><a href="matches.php">Matches</a></li>
-          <li><a href="stats.php">Interesting Stuff</a></li>
+          <li><a href="stats.php">Interesting Stats</a></li>
+          <li class="selected"><a href="player_stats.php">Player Stats</a>
           <li><a href="login.php">Login</a></li>
-          <li class="selected"><a href="player_stats.php">Player Stats</a></li>
+          </li>
         </ul>
       </div>
     </div>
@@ -44,7 +45,7 @@
 
       <?php
        // Connecting, selecting database
-        $dbconn = pg_connect("host=localhost dbname=ipl user=viveksingal password=vivisingal")
+        $dbconn = pg_connect("host=localhost port=5432 dbname=ipl user=viveksingal password=vivisingal")
         or die('Could not connect: ' . pg_last_error());
         $query='';
         if(isset($_GET["search_field"])) {
@@ -153,23 +154,6 @@
           <tr><th>Name</th><th>Innings</th><th>Overs</th><th>Runs</th><th>Wckts</th><th>AVG</th><th>Econ</th><th>SR</th><th>3w</th><th>4w</th></tr>
             <tr><td>$player_name</td><td>$num_matches</td><td>$num_over</td><td>$total_runs</td><td>$num_wickets</td><td>$avg</td><td>$econ</td><td>$sr</td><td>$num_3w</td><td>$num_4w</td></tr>
           ";
-
-          /*
-          $result = pg_query("Select season,sum(runs_scored) as runs from ball where striker=".$player_id."group by season") or die('Query failed : ' . pg_last_error());
-          echo "Player Name: ".$player_name;
-          echo "<table>\n";
-          echo "<tr><th>Year</th><th>Total Runs</th></tr>";
-          $total_sum=0;
-          while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-            $total_sum+=$line['runs'];
-            echo "\t<tr>\n";
-            foreach ($line as $col_value) {
-              echo "\t\t<td>$col_value</td>\n";
-            }
-          }
-          echo "<tr><td>All</td><td>$total_sum</td></tr>";
-          echo "\t</tr>\n";
-          echo "</table>\n"; */
         }
      
       ?>
@@ -181,5 +165,3 @@
   </div>
 </body>
 </html>
-
-

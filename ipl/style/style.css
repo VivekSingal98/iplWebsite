@@ -157,31 +157,51 @@ ul#menu li a:hover, ul#menu li.selected a, ul#menu li.selected a:hover
   background: #fff;}
 
 #site_content
-{ width: 1056px;
+{ 
+  width: 1056px;
   overflow: hidden;
   margin: 0 auto 0 auto;
   padding: 0 24px 20px 20px;
   background: #4A69E6;} 
 
+#site_content2
+{ 
+  width: 1056px;
+  /*overflow: hidden;*/
+  margin: 0 auto 0 auto;
+  padding: 10px 24px 20px 20px;
+  background: #4A69E6;
+  border-radius: 10px;
+  } 
+
 
 .sidebar
-{ float: right;
-  width: 210px;
-  padding: 0 15px 20px 15px;}
-
+{ float: left;
+  /*width: 210px;*/
+  padding: 0 0px 0px 0px;
+  background:white;
+  border-radius: 10px;
+  }
+.sidebar h3,.sidebar li a {
+  padding: 0 0 0 10px;
+  color:blue;
+}
 .sidebar ul
-{ width: 198px; 
-  padding: 4px 0 0 0; 
+{  
+  /*width: 19px; */
+  padding: 0px 0 0 0; 
   margin: 4px 0 30px 0;}
 
 .sidebar li
 { list-style: none; 
-  padding: 0 0 7px 0; }
+  padding: 0 0 7px 0; 
+}
 
 .sidebar li a, .sidebar li a:hover
-{ padding: 0 0 0 40px;
+{ padding: 0 0 0 20px;
   display: block;
-  background: transparent url(link.png) no-repeat left center;} 
+  background: transparent no-repeat left center;
+} 
 
 .sidebar li a.selected
 { color: #7E2451;
@@ -249,7 +269,6 @@ table
   /*margin-right: auto;*/
 }
 
-
 table tr th, table tr td
 { background: #FFF;
   color: #4A69E6;
@@ -270,7 +289,7 @@ table tr th, table tr td
 select,input[type='text'],input[type='password'],input[type='date'] {
   color: #4A69E6;
   font-weight: bold;
-  margin: 5px;
+  margin: 0px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   padding: 3px 4px;
   border: 5px solid white;
@@ -286,15 +305,15 @@ input[type='text'],input[type='password'],input[type='date'] {
   width: 280px;
 }
 
-input[type='submit'] {
+input[type='submit'],button {
   font-weight: bold;
   text-transform: uppercase;
   color: #FFF;
   min-width: 160px;
-  margin: 5px;
+  margin: 0px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  padding: 3px 4px;
-  border: 5px solid white;
+  padding: 4px 4px;
+  border: 2px solid white;
   border-radius: 5px;
   background-color: #4A69E6; 
 }

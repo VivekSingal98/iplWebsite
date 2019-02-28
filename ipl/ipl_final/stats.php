@@ -1,9 +1,9 @@
-<?php include 'func.php'; ?>
+<?php include 'func2.php'; ?>
 <!DOCTYPE HTML>
 <html>
 
 <head>
-  <title>black_pink_white - contact us</title>
+  <title>Stats</title>
   <meta name="description" content="website description" />
   <meta name="keywords" content="website keywords, website keywords" />
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -12,10 +12,8 @@
 
 <body>
   <div id="main">
-    <div id="header">
       <div id="logo">
         <div id="logo_text">
-          <!-- class="logo_colour", allows you to change the colour of the text -->
           <h1><a href="home.php">IPL</a></h1>
         </div>
       </div>
@@ -26,29 +24,55 @@
           <li><a href="teams.php">Teams</a></li>
           <li><a href="players.php">Players</a></li>
           <li><a href="matches.php">Matches</a></li>
-          <li class = "selected"><a href="stats.php">Interesting Stuff</a></li>
+          <li class = "selected"><a href="stats.php">Interesting Stats</a></li>
+          <li><a href="player_stats.php">Player Stats</a></li>
           <li><a href="login.php">Login</a></li>
         </ul>
       </div>
-      <div class="sidebar">
-        <h3>Batting</h3>
-        <ul>
-          <li><a href="stats.php?type=MostRuns">Most Runs</a></li>
-          <li><a href="stats.php?type=MostHS">Highest Score</a></li>
-          <li><a href="stats.php?type=MostSR">Highest Strike Rates</a></li>
-          <li><a href="stats.php?type=MostAVG">Highest Average</a></li>
-          <li><a href="stats.php?type=MostFours">Most Fours</a></li>
-          <li><a href="stats.php?type=MostSixes">Most Sixes</a></li>
-          <li><a href="stats.php?type=MostFifties">Most Fifties</a></li>
-          <li><a href="stats.php?type=MostCenturies">Most Centuries</a></li>
-          <li><a href="stats.php?type=FastestFifties">Fastest Fifties</a></li>
-          <li><a href="stats.php?type=FastestCenturies">Fastest Centuries</a></li>
+      <div id="menubar">
+        <ul id="menu">
+          <li><a href="stats.php?type2=bat">Batting</a></li>
+          <li><a href="stats.php?type2=bowl">Bowling</a></li>
         </ul>
       </div>
-    </div>
-    <div id="site_content2">
-
       <?php
+      if($_GET["type2"]=='bat')
+      {
+      echo "<div id='menubar2'>";
+        echo "<ul id='menu'>";
+          echo "<li><a href='stats.php?type2=bat&type=MostRuns'>Most Runs</a></li>";
+          echo "<li><a href='stats.php?type2=bat&type=MostHS'>Highest Score</a></li>";
+          echo "<li><a href='stats.php?type2=bat&type=MostSR'>Highest Strike Rates</a></li>";
+          echo "<li><a href='stats.php?type2=bat&type=MostAVG'>Highest Average</a></li>";
+          echo "<li><a href='stats.php?type2=bat&type=MostFours'>Most Fours</a></li>";
+          echo "<li><a href='stats.php?type2=bat&type=MostSixes'>Most Sixes</a></li>";
+          echo "<li><a href='stats.php?type2=bat&type=MostFifties'>Most Fifties</a></li>";
+          echo "<li><a href='stats.php?type2=bat&type=MostCenturies'>Most Centuries</a></li>";
+          echo "<li><a href='stats.php?type2=bat&type=FastestFifties'>Fastest Fifties</a></li>";
+          echo "<li><a href='stats.php?type2=bat&type=FastestCenturies'>Fastest Centuries</a></li>";
+        echo "</ul>";
+      echo "</div>";
+      }
+      elseif($_GET["type2"]=='bowl')
+      {
+      echo "<div id='menubar2'>";
+        echo "<ul id='menu'>";
+          echo "<li><a href='stats.php?type2=bowl&type=MostWickets'>Most Wickets</a></li>";
+          echo "<li><a href='stats.php?type2=bowl&type=MostMaidens'>Most Maidens</a></li>";
+          echo "<li><a href='stats.php?type2=bowl&type=MostDotBalls'>Most DotBalls</a></li>";
+          //echo "<li><a href='stats.php?type2=bowl&type=LeastRuns'>Least RunsGiven</a></li>";
+          echo "<li><a href='stats.php?type2=bowl&type=Average'>Average</a></li>";
+          echo "<li><a href='stats.php?type2=bowl&type=EconomyRate'>Economy Rate</a></li>";
+          
+        echo "</ul>";
+      echo "</div>";
+      }
+      ?>
+      
+    <div id="site_content2">
+    <div id="content">
+      <?php
+
         $common_query="select player_name as Player,total_matches as Matches,total_runs as Total_Runs,highest_score as Highest_Score,
                   Round(average_runs,2) as AVG_Runs,total_balls_faced as Balls_Faced,Round(total_runs*100.0/total_balls_faced,2) as Strike_Rate, num_100 as Centuries,num_50 as Fifties,total_num4 as Fours,total_num6 as Sixes
                   from (
@@ -62,8 +86,7 @@
                   group by striker,player_name ) as table1
                   join 
                   (select player_id,count(distinct match_id) as total_matches from player_match group by player_id) as table2
-                  on striker=player_id 
-                  where total_runs>=200";
+                  on striker=player_id where total_runs>=200";
         function mostRuns() {
           $query1= $GLOBALS['common_query'] . " order by total_runs DESC limit 100";
           $queryArray=array($query1);
@@ -104,6 +127,8 @@
           $queryArray=array($query1);
           createTable($queryArray); 
         }
+
+
         function fastestFifties() {
            $q_dropView="drop view if exists ball_cumm_runs2;
             drop view if exists ball_cumm_runs1;
@@ -136,8 +161,9 @@
                   order by balls_faced,runs desc,num_6s desc,num_4s desc";
             $queryArray=array($query);
             createTable($queryArray);  
-               
+            insertQuery($q_dropView);
           }
+
           function fastestCentury() {
            $q_dropView="drop view if exists ball_cumm_runs2;
             drop view if exists ball_cumm_runs1;
@@ -169,53 +195,109 @@
                   join venue on ball_cumm_runs2.venue_id=venue.venue_id
                   order by balls_faced,runs desc,num_6s desc,num_4s desc";
             $queryArray=array($query);
-            createTable($queryArray);  
-
-             
+            createTable($queryArray); 
+            insertQuery($q_dropView);   
           }
-          
+
+
          
-        if(isset($_GET["type"])) {
-          switch($_GET["type"]) {
-            case 'MostRuns':
-              mostRuns();
-              break;
-            case 'MostHS':
-              mostHS();
-              break;
-            case 'MostSR':
-              mostSR();
-              break;
-            case 'MostAVG':
-              mostAVG();
-              break;
-            case 'MostFours':
-              mostFours();
-              break; 
-            case 'MostSixes':
-              mostSixes();
-              break;
-            case 'MostFifties':
-              mostFifties();
-              break;
-            case 'MostCenturies':
-              mostCenturies();
-              break;
-            case 'FastestFifties':
-              fastestFifties();
-              break;
-            case 'FastestCenturies':
-              fastestCentury();
-              break;
+        if(isset($_GET["type2"])) {
+          if(isset($_GET["type"]) and $_GET["type2"]=='bat'){
+            switch($_GET["type"]) {
+              case 'MostRuns':
+                mostRuns();
+                break;
+              case 'MostHS':
+                mostHS();
+                break;
+              case 'MostSR':
+                mostSR();
+                break;
+              case 'MostAVG':
+                mostAVG();
+                break;
+              case 'MostFours':
+                mostFours();
+                break; 
+              case 'MostSixes':
+                mostSixes();
+                break;
+              case 'MostFifties':
+                mostFifties();
+                break;
+              case 'MostCenturies':
+                mostCenturies();
+                break;
+              case 'FastestFifties':
+                fastestFifties();
+                break;
+              case 'FastestCenturies':
+                fastestCentury();
+                break;
+            }
           } 
+          elseif(isset($_GET["type"]) and $_GET["type2"]=='bowl'){
+            include 'stats_bowl_q.php';
+
+            $dbconn = pg_connect("host=localhost port=5432 dbname=ipl user=viveksingal password=vivisingal") or die('Could not connect: ' . pg_last_error());
+            $result = pg_query($qb10) or die('Query failed: ' . pg_last_error());
+            $result = pg_query($qb0) or die('Query failed: ' . pg_last_error());
+            $result = pg_query($qb1) or die('Query failed: ' . pg_last_error());
+            $result = pg_query($qb2) or die('Query failed: ' . pg_last_error());
+            $result = pg_query($qb3) or die('Query failed: ' . pg_last_error());
+            $result = pg_query($qb4) or die('Query failed: ' . pg_last_error());
+            $result = pg_query($qb5) or die('Query failed: ' . pg_last_error());
+            $result = pg_query($qb6) or die('Query failed: ' . pg_last_error());
+            $result = pg_query($qb7) or die('Query failed: ' . pg_last_error());
+            $result = pg_query($qb8) or die('Query failed: ' . pg_last_error());
+            pg_close($dbconn);
+
+            switch($_GET["type"]) {
+              case 'MostWickets':
+                $qf = $qb9 . ' order by nwicket desc nulls last limit 50';
+                $queryArray=array($qf);
+                createTable($queryArray);
+                break;
+              case 'MostMaidens':
+                $qf = $qb9 . ' order by nmaiden desc nulls last limit 50';
+                $queryArray=array($qf);
+                createTable($queryArray);
+                break;
+              case 'MostDotBalls':
+                $qf = $qb9 . ' order by n0 desc nulls last limit 50';
+                $queryArray=array($qf);
+                createTable($queryArray);
+                break;
+
+              /*case 'LeastRuns':
+                $qf = $q10 . ' order by nruns limit 50';
+                $queryArray=array($qf);
+                createTable($queryArray);*/
+              case 'Average':
+                $qf = $qb9 . ' order by avg limit 50';
+                $queryArray=array($qf);
+                createTable($queryArray);
+                break;
+
+              case 'EconomyRate':
+                $qf = $qb9 . ' order by econ desc  nulls last limit 50';
+                $queryArray=array($qf);
+                createTable($queryArray);
+                break;
+
+            } 
+            $dbconn = u76("host=localhost port=5432 dbname=ipl user=viveksingal password=vivisingal") or die('Could not connect: ' . pg_last_error());
+            $result = pg_query($qb10) or die('Query failed: ' . pg_last_error());
+            pg_close($dbconn);
+          }
         }
-       pg_close($dbconn);
         
       ?>
     </div>
     <div id="footer">
       Made by Chinmaya Singh, Vivek Singal and Adarsh Agarwal
     </div>
+  </div>
   </div>
 
 </body>

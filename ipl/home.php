@@ -1,3 +1,8 @@
+<?php 
+  session_start(); 
+  session_unset(); 
+  session_destroy();
+?>
 <!DOCTYPE HTML>
 <html>
 
@@ -10,6 +15,7 @@
 </head>
 
 <body>
+
   <div id="main">
     <div id="header">
       <div id="logo">
@@ -27,6 +33,7 @@
           <li><a href="stats.php">Interesting Stuff</a></li>
           <li><a href="login.php">Login</a></li>
           <li><a href="player_stats.php">Player Stats</a></li>
+          <li><a href="rules.php">Cricket Rules</a></li>
         </ul>
       </div>
     </div>
@@ -39,7 +46,7 @@
         The IPL is the most-attended cricket league in the world and in 2014 ranked sixth by average attendance among all sports leagues. In 2010, the IPL became the first sporting event in the world to be broadcast live on YouTube. The brand value of IPL in 2018 was US$6.3 billion, according to Duff & Phelps. According to BCCI, the 2015 IPL season contributed ₹11.5 billion (US$182 million) to the GDP of the Indian economy.
         <br>
         There have been eleven seasons of the IPL tournament. The current IPL title holders are the Chennai Super Kings, who won the 2018 season. The most successful franchises in the tournament are the Chennai Super Kings and Mumbai Indians with 3 tournament wins each.</p>
-      </div>
+    
     </div>
     <div id="footer">
     Made by Chinmaya Singh, Vivek Singal and Adarsh Agarwal 
